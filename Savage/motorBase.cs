@@ -22,42 +22,13 @@ namespace IngameScript
     {
         public class motorBase
         {
-            private DateTime nowTime;
-            private DateTime befTime;
-
-            private IMyMotorStator myMotor;
-            private bool myMotor_reverse;
             private double angle;
+            private double befAngle;
             private double targetAngle;
-            private float targetRPM;
 
+            //public DateTime NowTime { get; set; }
 
-
-            public DateTime NowTime
-            {
-                get
-                {
-                    return nowTime;
-                }
-
-                set
-                {
-                    nowTime = value;
-                }
-            }
-
-            public DateTime BefTime
-            {
-                get
-                {
-                    return befTime;
-                }
-
-                set
-                {
-                    befTime = value;
-                }
-            }
+            //public DateTime BefTime { get; set; }
 
 
             public double Angle
@@ -73,31 +44,9 @@ namespace IngameScript
                 }
             }
 
-            public bool MyMotor_reverse
-            {
-                get
-                {
-                    return myMotor_reverse;
-                }
+            public bool MyMotor_reverse { get; set; }
 
-                set
-                {
-                    myMotor_reverse = value;
-                }
-            }
-
-            public IMyMotorStator MyMotor
-            {
-                get
-                {
-                    return myMotor;
-                }
-
-                set
-                {
-                    myMotor = value;
-                }
-            }
+            public IMyMotorStator MyMotor { get; set; }
 
             public double TargetAngle
             {
@@ -112,23 +61,25 @@ namespace IngameScript
                 }
             }
 
-            public float TargetRPM
+            public float TargetRPM { get; set; }
+
+            public double BefAngle
             {
                 get
                 {
-                    return targetRPM;
+                    return MathHelperD.ToDegrees(befAngle);
                 }
 
                 set
                 {
-                    targetRPM = value;
+                    befAngle = MathHelperD.ToRadians(value);
                 }
             }
 
             public motorBase(IMyMotorStator moter, bool flg, float target, float rpm)
             {
-                nowTime = DateTime.UtcNow;
-                befTime = DateTime.UtcNow;
+                //NowTime = DateTime.UtcNow;
+                //BefTime = DateTime.UtcNow;
 
                 MyMotor = moter;
                 MyMotor_reverse = flg;

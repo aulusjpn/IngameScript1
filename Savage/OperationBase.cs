@@ -19,22 +19,45 @@ namespace IngameScript
 {
     partial class Program
     {
+        /// <summary>
+        /// 動作管理クラス
+        /// これを基底とし、歩行・速歩などを継承して作成する。
+        /// </summary>
         public abstract class OperationBase
         {
 
-
+            //コントロール取得用
             protected IMyCockpit cockpit;
 
-            protected LegBase RLeg;
-            protected LegBase LLeg;
-            public StatusEnum ctrlStatus;
-            
 
-            public void Drive()
+            public StatusEnum ctrlStatus;
+
+
+            /// <summary>
+            /// 右足
+            /// </summary>
+            internal LegBase RLeg { get; set; }
+
+
+            /// <summary>
+            /// 左脚
+            /// </summary>
+            internal LegBase LLeg { get; set; }
+
+
+            /// <summary>
+            /// コンストラクタ
+            /// </summary>
+            /// <param name="RLeg">右足</param>
+            /// <param name="LLeg">左脚</param>
+            public OperationBase(LegBase RLeg, LegBase LLeg)
             {
-                               
+                this.RLeg = RLeg;
+                this.LLeg = LLeg;
+                ctrlStatus = StatusEnum.off;
             }
 
+            public abstract void Drive();
 
 
 

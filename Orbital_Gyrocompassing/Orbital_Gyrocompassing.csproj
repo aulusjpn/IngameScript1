@@ -90,10 +90,10 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="MDKUtilities">
-      <HintPath>C:\Users\aulus\AppData\Local\Microsoft\VisualStudio\15.0_a5752f98\Extensions\xhjndwon.ar3\MDKUtilities.dll</HintPath>
+      <HintPath>C:\Users\aulus\AppData\Local\Microsoft\VisualStudio\15.0_a5752f98\Extensions\fjdnopwi.fec\MDKUtilities.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Analyzer Include="C:\Users\aulus\AppData\Local\Microsoft\VisualStudio\15.0_a5752f98\Extensions\xhjndwon.ar3\Analyzers\MDKAnalyzer.dll" />
+    <Analyzer Include="C:\Users\aulus\AppData\Local\Microsoft\VisualStudio\15.0_a5752f98\Extensions\fjdnopwi.fec\Analyzers\MDKAnalyzer.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MathAngle.cs" />

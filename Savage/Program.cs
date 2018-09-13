@@ -16,13 +16,18 @@ using VRageMath;
 
 namespace IngameScript
 {
+    /// <summary>
+    /// メイン
+    /// </summary>
     partial class Program : MyGridProgram
     {
         private IMyCockpit cockpit;
         private IMyMotorStator roterR1;
         private IMyMotorStator roterR2;
+        private IMyMotorStator roterR3;
         private IMyMotorStator roterL1;
         private IMyMotorStator roterL2;
+        private IMyMotorStator roterL3;
         private IMyTextPanel text;
         private Vector3D targetVector;
         private DateTime nowTime;
@@ -32,7 +37,9 @@ namespace IngameScript
         private OperationBase DriveEntity;
 
 
-
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         public Program()
         {
 
@@ -43,7 +50,8 @@ namespace IngameScript
             roterL2 = GridTerminalSystem.GetBlockWithName("Small Conveyor Hinge L1") as IMyMotorStator;
             text = GridTerminalSystem.GetBlockWithName("Text panel") as IMyTextPanel;
             befTime = DateTime.UtcNow;
-            DriveEntity = new WalkClass();
+
+            DriveEntity = new WalkClass(new LegBase(roterR1, true,roterR2, true, roterR3, true), new LegBase(roterL1, true, roterL2, true, roterL3, true));
             Runtime.UpdateFrequency = UpdateFrequency.Update1;
             //for (int i = 0; i < 4; i++)
             //{
@@ -67,15 +75,15 @@ namespace IngameScript
 
             if (move.X > 0)
             {
-                DriveEntity.ctrlStatus = OperationBase.StatusEnum.Forword;
+                DriveEntity.ctrlStatus = Utilty.StatusEnum.Forword;
             }
             else if (move.X < 0)
             {
-                DriveEntity.ctrlStatus = OperationBase.StatusEnum.Back;
+                DriveEntity.ctrlStatus = Utilty.StatusEnum.Back;
             }
             else
             {
-                DriveEntity.ctrlStatus = OperationBase.StatusEnum.Halt;
+                DriveEntity.ctrlStatus = Utilty.StatusEnum.Halt;
             }
 
 

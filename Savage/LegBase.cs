@@ -19,12 +19,16 @@ namespace IngameScript
 {
     partial class Program
     {
+
+        /// <summary>
+        /// 脚部クラス
+        /// </summary>
         public class LegBase
         {
             private DateTime nowTime;
             private DateTime befTime;
 
-            private PartsMoveEnum LegStatus;
+            public PartsMoveEnum LegStatus;
 
             private motorBase myMotorKnee;
 
@@ -35,33 +39,41 @@ namespace IngameScript
             private motorBase myMotorAnkle;
 
 
-
+            /// <summary>
+            /// コンストラクタ
+            /// </summary>
+            /// <param name="m1">第１関節</param>
+            /// <param name="r1">第１関節反転フラグ</param>
+            /// <param name="m2">第２関節</param>
+            /// <param name="r2">第２関節反転フラグ</param>
+            /// <param name="m3">第３関節</param>
+            /// <param name="r3">第３関節反転フラグ</param>
             public LegBase(IMyMotorStator m1,bool r1,IMyMotorStator m2, bool r2, IMyMotorStator m3,bool r3)
             {
-                LegStatus = PartsMoveEnum.Stand_Up;
+                LegStatus = PartsMoveEnum.off;
                 myMotorKnee = new motorBase(m1, r1, 0, 0);
                 myMotorThigh = new motorBase(m2, r2, 0, 0);
-                myMotorThigh = new motorBase(m3, r3, 0, 0);
+                myMotorAnkle = new motorBase(m3, r3, 0, 0);
             }
 
 
-
+            /// <summary>
+            /// Movinegmoter
+            /// </summary>
+            /// <returns>Finisih?</returns>
             public bool DriveParts()
             {
+                bool returnvalue = false;
                 nowTime = DateTime.UtcNow;
-                if (LegStatus != PartsMoveEnum.Ready_For && LegStatus != PartsMoveEnum.Ready_Back)
-                {
-                    fastMove(myMotorKnee.Angle,,myMotorKnee,kneeTargetAngle); 
-                }
-                else
-                {
-                   
-                }
 
+                if (fastMove(myMotorKnee) && fastMove(myMotorThigh) && fastMove(myMotorAnkle))
+                {
+                    returnvalue = true;
+                }
 
                 befTime = nowTime;
 
-                return false;
+                return returnvalue;
             }
 
 
@@ -78,24 +90,35 @@ namespace IngameScript
                 motor.TargetVelocityRPM = (float)(diffAngle / (Math.PI * 2));
             }
 
-            public void fastMove(double nowAngle, double beffAngle, IMyMotorStator motor, float targetAngle)
+            public bool fastMove(motorBase motor)
             {
                 TimeSpan ts = befTime - nowTime;
 
-                double ang = (nowAngle - beffAngle);
+                double ang = (motor.Angle - motor.BefAngle);
 
-                double diffAngle = targetAngle - nowAngle;
+                double diffAngle = motor.TargetAngle - motor.Angle;
 
                 double rad = MathHelperD.ToRadians(diffAngle) / ts.TotalSeconds;
 
                 if (diffAngle > rad)
                 {
-                    motor.TargetVelocityRPM = 60f;
+                    motor.MyMotor.TargetVelocityRPM = 60f;
                 }
                 else
                 {
 
-                    motor.TargetVelocityRPM = (float)(diffAngle / (Math.PI * 2));
+                    motor.MyMotor.TargetVelocityRPM = (float)(diffAngle / (Math.PI * 2));
+                }
+
+                motor.BefAngle = motor.Angle;
+
+                if ((motor.Angle - motor.TargetAngle) < 0.5)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
 

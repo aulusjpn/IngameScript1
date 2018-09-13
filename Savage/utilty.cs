@@ -21,6 +21,10 @@ namespace IngameScript
     {
         public static class Utilty
         {
+
+            /// <summary>
+            /// 
+            /// </summary>
             public struct MyStruct
             {
 
@@ -34,6 +38,9 @@ namespace IngameScript
                 public bool myMotorAnkle_reverse;
             }
 
+            /// <summary>
+            /// 動作命令
+            /// </summary>
             public enum StatusEnum
             {
                 Forword = 0,
@@ -42,13 +49,17 @@ namespace IngameScript
                 off = 9,
             }
 
+
+            /// <summary>
+            /// 脚部動作ステータス
+            /// </summary>
             public enum PartsMoveEnum
             {
                 Ready_For = 0,
                 Ready_Back = 1,
                 Move_forward = 2,
-                Move_bakward = 3,
-                Stand_Up = 4,
+                Move_middle = 3,
+                Move_Backward = 4,
                 off = 9,
             }
         }
