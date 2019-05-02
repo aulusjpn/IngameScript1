@@ -90,12 +90,15 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="MDKUtilities">
-      <HintPath>C:\Users\aulus\AppData\Local\Microsoft\VisualStudio\15.0_a5752f98\Extensions\fjdnopwi.fec\MDKUtilities.dll</HintPath>
+      <HintPath>c:\users\aulus\appdata\local\microsoft\visualstudio\15.0_a5752f98\extensions\gdllmojp.sib\MDKUtilities.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Analyzer Include="C:\Users\aulus\AppData\Local\Microsoft\VisualStudio\15.0_a5752f98\Extensions\fjdnopwi.fec\Analyzers\MDKAnalyzer.dll" />
+    <Analyzer Include="c:\users\aulus\appdata\local\microsoft\visualstudio\15.0_a5752f98\extensions\gdllmojp.sib\Analyzers\MDKAnalyzer.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArmBase.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="HaltClass.cs" />
     <Compile Include="LegBase.cs" />
     <Compile Include="motorBase.cs" />
     <Compile Include="OperationBase.cs" />
@@ -107,6 +110,9 @@
     <Compile Include="Readme.cs" />
     <AdditionalFiles Include="thumb.png" />
     <AdditionalFiles Include="MDK\whitelist.cache" />
+    <Compile Include="ReadyClass.cs" />
+    <Compile Include="RunClass.cs" />
+    <Compile Include="ShutDown.cs" />
     <Compile Include="Utilty.cs" />
     <Compile Include="WalkClass.cs" />
   </ItemGroup>
