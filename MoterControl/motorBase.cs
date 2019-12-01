@@ -14,7 +14,6 @@ using VRage.Game.ModAPI.Ingame.Utilities;
 using VRage.Game.ObjectBuilders.Definitions;
 using VRage.Game;
 using VRageMath;
-using static IngameScript.Program.Utilty;
 
 namespace IngameScript
 {
@@ -34,14 +33,11 @@ namespace IngameScript
             /// radian
             /// </summary>
             private double targetAngle = 0;
-            public float TargetRPM { get; set; }
+            private float TargetRPM { get; set; }
+            //public bool ReverseFlg { get; set; }
+            private bool finishFlg { get; set; }
 
-
-            public bool finishFlg { get; set; }
-
-
-
-
+     
             public double Angle
             {
                 get
@@ -82,7 +78,8 @@ namespace IngameScript
             }
 
             public motorBase(IMyMotorStator moter, bool flg, float target, float rpm)
-            { 
+            {
+
                 MyMotor = moter;
                 MyMotor_reverse = flg;
                 TargetAngle = target;
@@ -96,7 +93,7 @@ namespace IngameScript
             public void Main()
             {
 
-                string[] str = MyMotor.CustomData.Split(',') ;
+                string[] str = MyMotor.CustomData.Split(',');
 
                 if (str.Length < 3)
                 {
@@ -105,8 +102,8 @@ namespace IngameScript
                 }
 
 
-                float buff = float.Parse(str[1]) ;
-                TargetAngle = MyMotor_reverse ? -buff: buff;
+                float buff = float.Parse(str[1]);
+                TargetAngle = MyMotor_reverse ? -buff : buff;
                 TargetRPM = float.Parse(str[2]);
 
                 nowTime = DateTime.UtcNow;
@@ -133,9 +130,10 @@ namespace IngameScript
                 }
                 else
                 {
-                    motor.MyMotor.TargetVelocityRad = -(float)(rad/2);
+                    motor.MyMotor.TargetVelocityRad = -(float)(rad / 2);
                 }
 
+                
 
                 befTime = DateTime.UtcNow;
                 motor.BefAngle = motor.Angle;
@@ -182,8 +180,6 @@ namespace IngameScript
                     return false;
                 }
             }
-
-
         }
     }
 }

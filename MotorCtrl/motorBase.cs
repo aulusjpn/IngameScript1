@@ -14,7 +14,6 @@ using VRage.Game.ModAPI.Ingame.Utilities;
 using VRage.Game.ObjectBuilders.Definitions;
 using VRage.Game;
 using VRageMath;
-using static IngameScript.Program.Utilty;
 
 namespace IngameScript
 {
@@ -28,65 +27,33 @@ namespace IngameScript
             /// <summary>
             /// radian
             /// </summary>
-            private double befAngle = 0;
+            private double befRadian = 0;
 
             /// <summary>
             /// radian
             /// </summary>
-            private double targetAngle = 0;
-            public float TargetRPM { get; set; }
+            private double targetRadians = 0;
+            private float targetRPM { get; set; }
+            //public bool ReverseFlg { get; set; }
+            private bool finishFlg { get; set; }
 
+            private bool MyMotor_reverse { get; set; }
 
-            public bool finishFlg { get; set; }
+            private IMyMotorStator MyMotor { get; set; }
 
-
-
-
-            public double Angle
+            private double motorRadian
             {
-                get
-                {
-                    return MathHelperD.ToDegrees(MyMotor.Angle);
-                }
-            }
-
-            public bool MyMotor_reverse { get; set; }
-
-            public IMyMotorStator MyMotor { get; set; }
-
-            public double TargetAngle
-            {
-                get
-                {
-                    return MathHelperD.ToDegrees(targetAngle);
-                }
-
-                set
-                {
-                    targetAngle = MathHelperD.ToRadians(value);
-                }
+                get { return MyMotor.Angle; }
             }
 
 
-            public double BefAngle
+            public motorBase(IMyMotorStator moter, bool reverseFlg, float targetAngle, float targetRpm)
             {
-                get
-                {
-                    return MathHelperD.ToDegrees(befAngle);
-                }
 
-                set
-                {
-                    befAngle = MathHelperD.ToRadians(value);
-                }
-            }
-
-            public motorBase(IMyMotorStator moter, bool flg, float target, float rpm)
-            { 
                 MyMotor = moter;
-                MyMotor_reverse = flg;
-                TargetAngle = target;
-                TargetRPM = rpm;
+                MyMotor_reverse = reverseFlg;
+                targetRadians = MathHelperD.ToRadians(targetAngle);
+                targetRPM = targetRpm;
 
                 nowTime = DateTime.UtcNow;
                 befTime = DateTime.UtcNow;
@@ -96,7 +63,7 @@ namespace IngameScript
             public void Main()
             {
 
-                string[] str = MyMotor.CustomData.Split(',') ;
+                string[] str = MyMotor.CustomData.Split(',');
 
                 if (str.Length < 3)
                 {
@@ -105,42 +72,40 @@ namespace IngameScript
                 }
 
 
-                float buff = float.Parse(str[1]) ;
-                TargetAngle = MyMotor_reverse ? -buff: buff;
-                TargetRPM = float.Parse(str[2]);
+                float buff = float.Parse(str[1]);
+                targetRadians = MyMotor_reverse ? MathHelperD.ToRadians(-buff) : MathHelperD.ToRadians(buff);
+                targetRPM = float.Parse(str[2]);
 
                 nowTime = DateTime.UtcNow;
 
                 finishFlg = fastMove(this);
 
+                
             }
 
             private bool fastMove(motorBase motor)
             {
                 TimeSpan ts = befTime - DateTime.UtcNow;
 
-                //double ang = (motor.Angle - motor.BefAngle);
-
-                double diffAngle = motor.TargetAngle - motor.Angle;
+                double diffAngle = MathHelperD.ToDegrees(motor.targetRadians) - MathHelperD.ToDegrees(motor.motorRadian);
 
                 double rad = MathHelperD.ToRadians(diffAngle) / (-0.03);
 
-                // motor.MyMotor.TargetVelocityRad = -(float)(rad / 5);
-
-                if (TargetRPM < Math.Abs(rad * 9.549))
+                if (targetRPM < Math.Abs(rad * 9.549))
                 {
-                    MyMotor.TargetVelocityRPM = MathHelperD.ToDegrees(rad) < 0 ? TargetRPM : -TargetRPM;
+                    MyMotor.TargetVelocityRPM = MathHelperD.ToDegrees(rad) < 0 ? targetRPM : -targetRPM;
                 }
                 else
                 {
-                    motor.MyMotor.TargetVelocityRad = -(float)(rad/2);
+                    motor.MyMotor.TargetVelocityRad = -(float)(rad / 2);
                 }
 
+                
 
                 befTime = DateTime.UtcNow;
-                motor.BefAngle = motor.Angle;
+                motor.befRadian = motor.motorRadian;
 
-                if (Math.Abs(motor.Angle - motor.TargetAngle) < 0.5)
+                if (Math.Abs(MathHelperD.ToDegrees(motor.motorRadian) - MathHelperD.ToDegrees(motor.targetRadians)) < 0.5)
                 {
                     motor.MyMotor.TargetVelocityRad = 0;
                     return true;
@@ -155,15 +120,15 @@ namespace IngameScript
             {
                 TimeSpan ts = befTime - nowTime;
 
-                double ang = (motor.Angle - motor.BefAngle);
+                double ang = (MathHelperD.ToDegrees(motor.motorRadian) - MathHelperD.ToDegrees(motor.befRadian));
 
-                double diffAngle = motor.TargetAngle - motor.Angle;
+                double diffAngle = MathHelperD.ToDegrees(motor.targetRadians) - MathHelperD.ToDegrees(motor.motorRadian);
 
                 double rad = MathHelperD.ToRadians(diffAngle) / ts.TotalSeconds;
 
                 if (diffAngle > rad)
                 {
-                    motor.MyMotor.TargetVelocityRPM = motor.TargetRPM;
+                    motor.MyMotor.TargetVelocityRPM = motor.targetRPM;
                 }
                 else
                 {
@@ -171,9 +136,9 @@ namespace IngameScript
                     motor.MyMotor.TargetVelocityRPM = (float)(diffAngle / (Math.PI * 2));
                 }
 
-                motor.BefAngle = motor.Angle;
+                motor.befRadian = motor.motorRadian;
 
-                if ((motor.Angle - motor.TargetAngle) < 0.5)
+                if ((MathHelperD.ToDegrees(motor.motorRadian) - MathHelperD.ToDegrees(motor.targetRadians)) < 0.5)
                 {
                     return true;
                 }
@@ -182,8 +147,6 @@ namespace IngameScript
                     return false;
                 }
             }
-
-
         }
     }
 }

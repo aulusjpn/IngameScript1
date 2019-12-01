@@ -98,6 +98,8 @@
   <ItemGroup>
     <Compile Include="ArmBase.cs" />
     <Compile Include="HaltClass.cs" />
+    <Compile Include="IMoter.cs" />
+    <Compile Include="IPart.cs" />
     <Compile Include="LegBase.cs" />
     <Compile Include="MDK\Bootstrapper.cs" />
     <AdditionalFiles Include="MDK\MDK.options">

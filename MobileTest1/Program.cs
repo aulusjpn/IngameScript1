@@ -9,9 +9,12 @@ using System.Text;
 using System;
 using VRage.Collections;
 using VRage.Game.Components;
+using VRage.Game.GUI.TextPanel;
+using VRage.Game.ModAPI.Ingame.Utilities;
 using VRage.Game.ModAPI.Ingame;
 using VRage.Game.ObjectBuilders.Definitions;
 using VRage.Game;
+using VRage;
 using VRageMath;
 
 namespace IngameScript
@@ -33,35 +36,26 @@ namespace IngameScript
         // You can also simply create a new utility class manually, you don't
         // have to use the template if you don't want to. Just do so the first
         // time to see what a utility class looks like.
+        // 
+        // Go to:
+        // https://github.com/malware-dev/MDK-SE/wiki/Quick-Introduction-to-Space-Engineers-Ingame-Scripts
+        //
         IMyCockpit cockpit;
-        IMyMotorStator roterR1;
+        IMyMotorStator roter;
         IMyMotorStator roterR2;
         IMyMotorStator roterL1;
         IMyMotorStator roterL2;
         IMyTextPanel text;
         Vector2 targetAngle;
-        StatusEnum Status = StatusEnum.off;
 
         //照準角度
         private float elevationAngle;
         private float azimuthangle;
 
-        enum StatusEnum
-        {
-            Stand = 0,
-            Ready = 1,
-            Move = 2,
-            Run = 3,
-            Stand_Up =4, 
-            off = 9,
-        }
-
         public Program()
         {
-
-
             cockpit = GridTerminalSystem.GetBlockWithName("Azimuth Open Cockpit") as IMyCockpit;
-            //roterR1 = GridTerminalSystem.GetBlockWithName("Arm R1") as IMyMotorStator;
+            roter = GridTerminalSystem.GetBlockWithName("Rotor") as IMyMotorStator;
             //roterR2 = GridTerminalSystem.GetBlockWithName("Arm R2") as IMyMotorStator;
             //roterL1 = GridTerminalSystem.GetBlockWithName("Arm L1") as IMyMotorStator;
             //roterL2 = GridTerminalSystem.GetBlockWithName("Arm L2") as IMyMotorStator;
@@ -75,7 +69,12 @@ namespace IngameScript
 
         public void Save()
         {
-
+            // Called when the program needs to save its state. Use
+            // this method to save your state to the Storage field
+            // or some other means. 
+            // 
+            // This method is optional and can be removed if not
+            // needed.
         }
 
         public void Main(string argument, UpdateType updateSource)
@@ -86,79 +85,20 @@ namespace IngameScript
             float Roll = cockpit.RollIndicator;
 
             string str = "";
-            Vector3D Orientation = cockpit.WorldMatrix.Forward;
 
             str = "MoveIndicator:" + cockpit.Name + cockpit.MoveIndicator.ToString() + "\r\n";
             str = str + "RotationIndicator:" + cockpit.RotationIndicator.ToString() + "\r\n";
             str = str + "RollIndicator:" + cockpit.RollIndicator.ToString() + "\r\n" + "\r\n" + "\r\n";
 
-            if (Me.CustomData == "0")
-            {
-                str += "00" + "\r\n";
-                if (cockpit.RotationIndicator.X > 0)
-                {
-                    targetAngle.X += 1f;
-                }
-                else if (cockpit.RotationIndicator.X < 0)
-                {
-                    targetAngle.X -= 1f;
-                }
-                
-                if (cockpit.RotationIndicator.Y > 0)
-                {
-                    targetAngle.Y -= 1f;
-                }
-                else if (cockpit.RotationIndicator.Y < 0)
-                {
-                    targetAngle.Y += 1f;
-                }
-                str += targetAngle.X.ToString() + "\r\n";
-                str += targetAngle.Y.ToString() + "\r\n";
+            string[] datastr = roter.CustomData.Split(',');
 
-            }
-            else
-            {
+            float angle = float.Parse(datastr[1]);
 
-            }
+            angle = angle + (cockpit.RotationIndicator.Y / 10);
+
+            roter.CustomData = string.Format("0,100,10", angle.ToString(), datastr[2]);
+
             Me.GetSurface(0).WriteText(str);
-        }
-
-        private void Move(Vector3 move)
-        {
-            float rotersR_indicator = 0f;
-            float rotersL_indicator = 0f;
-
-            if (move.Z > 0)
-            {
-                rotersR_indicator -= 60;
-                rotersL_indicator += 60;
-            }
-            else if (move.Z < 0)
-            {
-                rotersR_indicator += 60;
-                rotersL_indicator -= 60;
-            }
-            else
-            {
-                rotersR_indicator = 0f;
-                rotersL_indicator = 0f;
-            }
-
-            if (move.X > 0)
-            {
-                rotersR_indicator -= 40f;
-                rotersL_indicator -= 40f;
-            }
-            else if (move.X < 0)
-            {
-                rotersR_indicator += 40f;
-                rotersL_indicator += 40f;
-            }
-        }
-
-        public void MorterMoveToAngle(IMyMotorStator motorStator, double TargetAngle, float velocity)
-        {
-            
         }
     }
 }
