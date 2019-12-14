@@ -100,7 +100,6 @@
     <Compile Include="S_ACS.cs" />
     <Compile Include="ArmModel.cs" />
     <Compile Include="LegModel.cs" />
-    <Compile Include="IPart.cs" />
     <Compile Include="MDK\Bootstrapper.cs" />
     <AdditionalFiles Include="MDK\MDK.options">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

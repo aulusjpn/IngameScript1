@@ -22,7 +22,7 @@ namespace IngameScript
         /// <summary>
         /// 脚部クラス
         /// </summary>
-        public class LegModel:IPart
+        public class LegModel
         {
             private DateTime nowTime;
             private DateTime befTime;

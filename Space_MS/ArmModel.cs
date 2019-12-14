@@ -19,7 +19,7 @@ namespace IngameScript
 {
     partial class Program
     {
-        public class ArmModel : IPart
+        public class ArmModel
         {
             private DateTime nowTime;
             private DateTime befTime;

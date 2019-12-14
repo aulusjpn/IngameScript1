@@ -93,27 +93,24 @@ namespace IngameScript
             }
 
 
-            public void Update(IMyCockpit cockpit)
+            public void Update()
             {
 
-                //string[] str = MyMotor.tar);
-
-                //if (str.Length < 3)
-                //{
-                //    finishFlg = false;
-                //    return;
-                //}
-
-
-                //float buff = float.Parse(str[1]);
-                //TargetAngleDegree = MyMotorReverse ? -buff : buff;
-                //TargetRPM = float.Parse(str[2]);
-
+                
                 nowTime = DateTime.UtcNow;
 
 
                 //finishFlg = fastMove(this);
 
+            }
+
+            private void getOrderTextData()
+            {
+                string text = MyMotor.CustomData;
+
+                var arr  = text.Split(Environment.NewLine.ToArray(),StringSplitOptions.None);
+
+                
             }
 
             private bool fastMove(MoterModel motor)

@@ -24,11 +24,14 @@ namespace IngameScript
         {
 
 
-            public S_ACS(IPart RPart, IPart LPart) : base(RPart, LPart)
+            public S_ACS(LegModel rLeg, LegModel lLen, ArmModel rArm, ArmModel lArm) : base(rLeg, lLen, rArm, lArm)
             {
-                this.LPart = LPart;
-                this.RPart = RPart;
+                this.RPart = rLeg;
+                this.LPart = lLen;
+                this.RArm = rArm;
+                this.LArm = lArm;
             }
+
 
             public override void armTarget(IMyCockpit Rota)
             {
@@ -37,39 +40,40 @@ namespace IngameScript
 
             public override void Drive(IMyCockpit cockpit)
             {
-                RPart.Drive(cockpit);            }
+                RPart.Drive(cockpit);
+            }
 
             public void TargettingMouse(IMyCockpit cockpit)
             {
 
-                if (cockpit.RotationIndicator.X > 0)
-                {
-                    ((ArmModel)RPart).MoveUp();
-                }
-                else if (cockpit.RotationIndicator.X < 0)
-                {
-                    ((ArmModel)RPart).MoveDown();
-                }
-                else
-                {
+                //if (cockpit.RotationIndicator.X > 0)
+                //{
+                //    ((ArmModel)RPart).MoveUp();
+                //}
+                //else if (cockpit.RotationIndicator.X < 0)
+                //{
+                //    ((ArmModel)RPart).MoveDown();
+                //}
+                //else
+                //{
 
-                }
+                //}
 
-                if (cockpit.RotationIndicator.Y > 0)
-                {
+                //if (cockpit.RotationIndicator.Y > 0)
+                //{
 
-                }
-                else if (cockpit.RotationIndicator.Y < 0)
-                {
+                //}
+                //else if (cockpit.RotationIndicator.Y < 0)
+                //{
 
-                }
-                else
-                {
+                //}
+                //else
+                //{
 
-                }
+                //}
 
             }
-
         }
     }
 }
+

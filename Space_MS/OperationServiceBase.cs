@@ -33,23 +33,28 @@ namespace IngameScript
             /// <summary>
             /// 右足
             /// </summary>
-            protected IPart RPart { get; set; }
+            protected LegModel RPart { get; set; }
 
             /// <summary>
             /// 左脚
             /// </summary>
-            protected IPart LPart { get; set; }
+            protected LegModel LPart { get; set; }
 
+            protected ArmModel RArm { get; set; }
+
+            protected ArmModel LArm { get; set; }
 
             /// <summary>
             /// コンストラクタ
             /// </summary>
             /// <param name="RLeg">右足</param>
             /// <param name="LLeg">左脚</param>
-            public OperationServiceBase(IPart RPart, IPart LPart)
+            public OperationServiceBase(LegModel rLeg, LegModel lLeg,ArmModel rArm,ArmModel lArm)
             {
-                this.RPart = RPart;
-                this.LPart = LPart;
+                this.RPart = rLeg;
+                this.LPart = lLeg;
+                this.RArm = rArm;
+                this.LArm = lArm;
 
             }
 
