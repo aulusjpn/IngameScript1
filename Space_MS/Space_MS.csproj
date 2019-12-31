@@ -36,7 +36,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MotorOperationData.cs" />
+    <Compile Include="ExoMovingOperationSrv.cs" />
+    <Compile Include="Program.MotorOperationDataEntity.cs" />
     <Compile Include="S_ACS.cs" />
     <Compile Include="ArmModel.cs" />
     <Compile Include="LegModel.cs" />

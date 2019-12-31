@@ -104,14 +104,6 @@ namespace IngameScript
 
             }
 
-            private void getOrderTextData()
-            {
-                string text = MyMotor.CustomData;
-
-                var arr  = text.Split(Environment.NewLine.ToArray(),StringSplitOptions.None);
-
-                
-            }
 
             private bool fastMove(MoterModel motor)
             {
