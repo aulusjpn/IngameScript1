@@ -25,11 +25,6 @@ namespace IngameScript
         public abstract class OperationServiceBase
         {
 
-            //コントロール取得用
-            public string[] TargetListForward = new string[] { };
-            public string[] TargetListBackward = new string[] { };
-            public string[] TargetListMiddleward = new string[] { };
-
             /// <summary>
             /// 右足
             /// </summary>

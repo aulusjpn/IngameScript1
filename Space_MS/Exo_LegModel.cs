@@ -22,18 +22,18 @@ namespace IngameScript
         /// <summary>
         /// 脚部クラス
         /// </summary>
-        public class LegModel
+        public class Exo_LegModel :LegModel
         {
             private DateTime nowTime;
             private DateTime befTime;
 
-            public MoterModel myMotorKnee;
+            // public MoterModel myMotorKnee;
 
 
-            public MoterModel myMotorThigh;
+            // public MoterModel myMotorThigh;
 
 
-            public MoterModel myMotorAnkle;
+            // public MoterModel myMotorAnkle;
 
 
             /// <summary>
@@ -45,11 +45,11 @@ namespace IngameScript
             /// <param name="r2">第２関節反転フラグ</param>
             /// <param name="m3">第３関節</param>
             /// <param name="r3">第３関節反転フラグ</param>
-            public LegModel(IMyMotorStator m1,bool r1,IMyMotorStator m2, bool r2, IMyMotorStator m3,bool r3)
-            {               
-                myMotorThigh = new MoterModel(m1, r1, 0, 0);
-                myMotorKnee = new MoterModel(m2, r2, 0, 0);
-                myMotorAnkle = new MoterModel(m3, r3, 0, 0);
+            public Exo_LegModel(IMyMotorStator m1,IMyMotorStator m2, IMyMotorStator m3)
+            {
+                moters.Add(new MoterModel(m1, new MotorOperationDataEntity(0, 0, true)));
+                moters.Add(new MoterModel(m2, new MotorOperationDataEntity(0, 0, true)));
+                moters.Add(new MoterModel(m3, new MotorOperationDataEntity(0, 0, true)));
             }
 
 
@@ -57,27 +57,28 @@ namespace IngameScript
             /// Movinegmoter
             /// </summary>
             /// <returns>Finisih?</returns>
-            public bool Drive(IMyCockpit cockpit)
+            public bool Drive()
             {
 
                 bool returnvalue = false;
 
                 nowTime = DateTime.UtcNow;
 
-                //myMotorKnee.Update();
-                //myMotorThigh.Update();
-                //myMotorAnkle.Update();
+
+                foreach (var item in moters)
+                {
+                    item.Update();
+                }
+
 
                 befTime = nowTime;
 
                 return returnvalue;
             }
 
-            public void setAngle(double[] list)
+            public void setData(double[] list)
             {
-                myMotorKnee.TargetAngleDegree = list[0];
-                myMotorThigh.TargetAngleDegree = list[1];
-                myMotorAnkle.TargetAngleDegree = list[2];
+                
             }
             
         }

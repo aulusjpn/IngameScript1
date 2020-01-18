@@ -24,17 +24,42 @@ namespace IngameScript
 
         IMyCockpit myCockpit;
         OperationServiceBase Operation;
-        ArmModel arm;
         public Program()
         {
             myCockpit = (IMyCockpit)GridTerminalSystem.GetBlockWithName("Azimuth Open Cockpit No Oxygen");
             Runtime.UpdateFrequency = UpdateFrequency.Update1;
             Me.GetSurface(0).ContentType = ContentType.SCRIPT;
 
-            arm = new ArmModel((IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"), true,
-                (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Small Conveyor Hinge 1"), true,
-                (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Two-ended Motor 1"), true);
-            Operation = new S_ACS(arm, arm);
+
+            var rLeg = new Exo_LegModel(
+                (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"),
+            (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"),
+            (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"));
+
+
+            var lLeg = new Exo_LegModel(
+                (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"),
+            (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"),
+            (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"));
+
+
+            var rArm = new Exo_ArmModel(
+                (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"),
+            (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"),
+            (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"));
+
+
+            var lArm = new Exo_ArmModel(
+                (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"),
+            (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"),
+            (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"));
+
+            Operation = new Exo_MovingOperationSrv(rLeg, lLeg, rArm, lArm);
+
+            // arm = new ArmModel((IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"), true,
+            //     (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Small Conveyor Hinge 1"), true,
+            //     (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Two-ended Motor 1"), true);
+            // Operation = new S_ACS(arm, arm);
 
 
         }
@@ -53,20 +78,20 @@ namespace IngameScript
         {
             var surface = Me.GetSurface(0);
 
-            Operation.armTarget(myCockpit);
+            // Operation.armTarget(myCockpit);
             Operation.Drive(myCockpit);
 
-            using (MySpriteDrawFrame frame = surface.DrawFrame())
-            {
-                MySprite sprite;
+            // using (MySpriteDrawFrame frame = surface.DrawFrame())
+            // {
+            //     MySprite sprite;
 
-                string str = myCockpit.MoveIndicator.ToString().AddNewLine()+ myCockpit.RollIndicator.ToString().AddNewLine()+ myCockpit.RotationIndicator.ToString().AddNewLine() + myCockpit.ShowHorizonIndicator.ToString().AddNewLine();
-                str += arm.myMotor1.TargetAngleDegree.ToString().AddNewLine();
-                sprite = MySprite.CreateText(str, "Debug", Color.Red,0.8f,TextAlignment.LEFT);
+            //     string str = myCockpit.MoveIndicator.ToString().AddNewLine()+ myCockpit.RollIndicator.ToString().AddNewLine()+ myCockpit.RotationIndicator.ToString().AddNewLine() + myCockpit.ShowHorizonIndicator.ToString().AddNewLine();
+            //     str += arm.myMotor1.TargetAngleDegree.ToString().AddNewLine();
+            //     sprite = MySprite.CreateText(str, "Debug", Color.Red,0.8f,TextAlignment.LEFT);
 
-                sprite.Position = new Vector2(0, 0);
-                frame.Add(sprite);
-            }
+            //     sprite.Position = new Vector2(0, 0);
+            //     frame.Add(sprite);
+            // }
 
 
 

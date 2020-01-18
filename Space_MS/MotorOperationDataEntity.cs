@@ -35,6 +35,15 @@ namespace IngameScript
                 targetAngleRadian =  MathHelperD.ToRadians(value);
             }
 
+            public double GetTargetAngleWithRadian()
+            {
+                return (targetAngleRadian);
+            }
+
+            public void SetTargetAngleWithRadian(double value)
+            {
+                targetAngleRadian = value;            }
+
             //private double currentAngleRadian;
 
             //public double GetCurrentTargetAngle()
@@ -70,6 +79,13 @@ namespace IngameScript
             public void SetReverce(bool value)
             {
                 reverce = value;
+            }
+
+            public MotorOperationDataEntity(double targetAngle,float targetVelocity,bool reverce)
+            {
+                this.SetTargetAngle(targetAngle);
+                this.SetVelocity(targetVelocity);
+                this.SetReverce(reverce);
             }
 
         }

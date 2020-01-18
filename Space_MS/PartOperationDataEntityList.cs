@@ -1,4 +1,4 @@
-﻿using Sandbox.Game.EntityComponents;
+using Sandbox.Game.EntityComponents;
 using Sandbox.ModAPI.Ingame;
 using Sandbox.ModAPI.Interfaces;
 using SpaceEngineers.Game.ModAPI.Ingame;
@@ -21,21 +21,22 @@ namespace IngameScript
 {
     partial class Program
     {
-        public class ExoMovingOperationSrv : OperationServiceBase
+        public class PartOperationDataEntityList
         {
-            public ExoMovingOperationSrv(LegModel rLeg, LegModel lLeg, ArmModel rArm, ArmModel lArm) : base(rLeg, lLeg, rArm, lArm)
-            {
+
+           public Dictionary<MoterModel,MotorOperationDataEntity> entiityDictionaly { set; get; }
+
+           public PartOperationDataEntityList(Part part)
+           {
+                var dictionary = new Dictionary<MoterModel, MotorOperationDataEntity>();
+                foreach (var item in part.moters)
+                {
+                    dictionary.Add(item, new MotorOperationDataEntity(0,0,true));
+
+                }
+                entiityDictionaly = dictionary;
             }
 
-            public override void armTarget(IMyCockpit Rota)
-            {
-                throw new NotImplementedException();
-            }
-
-            public override void Drive(IMyCockpit cockpit)
-            {
-                throw new NotImplementedException();
-            }
         }
     }
 }

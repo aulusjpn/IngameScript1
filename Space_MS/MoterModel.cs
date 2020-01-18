@@ -29,6 +29,10 @@ namespace IngameScript
 
             public IMyMotorStator MyMotor { get; set; }
 
+            /// <summary>
+            /// モーターの操作情報保持クラス。
+            /// あくまで命令保持であり、データ
+            /// </summary>
             public MotorOperationDataEntity dataEntity { get; set; }
 
             public bool finishFlg { get; set; }
@@ -48,7 +52,14 @@ namespace IngameScript
 
                 
                 nowTime = DateTime.UtcNow;
-                if (dataEntity != null) this.dataEntity = dataEntity;
+                if (dataEntity != null) {
+                    this.dataEntity = dataEntity;
+                }
+                else
+                {
+                    this.dataEntity = MotorOperationFormatter.getDataEntityFromMoter(MyMotor, this.dataEntity);
+                }               
+  
 
                 //finishFlg = fastMove(this);
 

@@ -40,7 +40,7 @@ namespace IngameScript
 
             public override void Drive(IMyCockpit cockpit)
             {
-                RPart.Drive(cockpit);
+                // RPart.Drive(cockpit);
             }
 
             public void TargettingMouse(IMyCockpit cockpit)
