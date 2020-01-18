@@ -21,19 +21,32 @@ namespace IngameScript
 {
     partial class Program
     {
-        public class MotorOperationDataModel
+        public class MotorOperationDataEntity
         {
-            private float angle;
+            private double targetAngleRadian;
 
-            public float GetAngle()
+            public double GetTargetAngle()
             {
-                return angle;
+                return MathHelperD.ToDegrees(targetAngleRadian);
             }
 
-            public void SetAngle(float value)
+            public void SetTargetAngle(double value)
             {
-                angle = value;
+                targetAngleRadian =  MathHelperD.ToRadians(value);
             }
+
+            //private double currentAngleRadian;
+
+            //public double GetCurrentTargetAngle()
+            //{
+            //    return MathHelperD.ToDegrees(currentAngleRadian);
+            //}
+
+            //public void SetCurrentTargetAngle(double value)
+            //{
+            //    currentAngleRadian = MathHelperD.ToRadians(value);
+            //}
+
 
             private float velocity;
 
@@ -59,23 +72,6 @@ namespace IngameScript
                 reverce = value;
             }
 
-            IMyMotorStator MotorStator;
-
-            MotorOperationDataModel (IMyMotorStator motorStator)
-            {
-               MotorStator = motorStator;
-            }
-
-
-
-            public MotorOperationDataModel getData(IMyMotorStator myMotor)
-            {
-                string text = myMotor.CustomData;
-
-                var arr = text.Split(Environment.NewLine.ToArray(), StringSplitOptions.None);
-
-                return this;
-            }
         }
     }
 }
