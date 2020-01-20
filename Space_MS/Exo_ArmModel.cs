@@ -38,6 +38,7 @@ namespace IngameScript
             /// <param name="r3">第３関節反転フラグ</param>
             public Exo_ArmModel(IMyMotorStator m1, IMyMotorStator m2, IMyMotorStator m3)
             {
+                moters = new List<MoterModel>();
                 moters.Add(new MoterModel(m1, new MotorOperationDataEntity(0, 0, true)));
                 moters.Add(new MoterModel(m2, new MotorOperationDataEntity(0, 0, true)));
             }

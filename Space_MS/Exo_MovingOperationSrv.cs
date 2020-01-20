@@ -27,96 +27,147 @@ namespace IngameScript
             List<PartOperationDataEntityList> operationList_lLeg = new List<PartOperationDataEntityList>();
             List<PartOperationDataEntityList> operationList_rArm = new List<PartOperationDataEntityList>();
             List<PartOperationDataEntityList> operationList_lArm = new List<PartOperationDataEntityList>();
+
+            bool nextActionFlg = false;
+            int ActionNo = 0;
             
             public Exo_MovingOperationSrv(Exo_LegModel rLeg, Exo_LegModel lLeg, Exo_ArmModel rArm, Exo_ArmModel lArm) : base(rLeg, lLeg, rArm, lArm)
             {
                 var list = Exo_OperationDataList.stble;
+                operationList_rLeg.Add(createPartODEList(rLeg, list[0]));
+                operationList_lLeg.Add(createPartODEList(lLeg, list[1]));
+                operationList_rArm.Add(createPartODEList(rArm, list[2]));
+                operationList_lArm.Add(createPartODEList(lArm, list[3]));
 
-                PartOperationDataEntityList buff = new PartOperationDataEntityList(rLeg);
-                Dictionary<MoterModel, MotorOperationDataEntity> buffdic = new Dictionary<MoterModel, MotorOperationDataEntity>();
 
-                for (int i = 0; i < rLeg.moters.Count; i++)
+                list = Exo_OperationDataList.walk_1;
+                operationList_rLeg.Add(createPartODEList(rLeg, list[0]));
+                operationList_lLeg.Add(createPartODEList(lLeg, list[1]));
+                operationList_rArm.Add(createPartODEList(rArm, list[2]));
+                operationList_lArm.Add(createPartODEList(lArm, list[3]));
+
+                list = Exo_OperationDataList.walk_2;
+                operationList_rLeg.Add(createPartODEList(rLeg, list[0]));
+                operationList_lLeg.Add(createPartODEList(lLeg, list[1]));
+                operationList_rArm.Add(createPartODEList(rArm, list[2]));
+                operationList_lArm.Add(createPartODEList(lArm, list[3]));
+
+                list = Exo_OperationDataList.walk_3;
+                operationList_rLeg.Add(createPartODEList(rLeg, list[0]));
+                operationList_lLeg.Add(createPartODEList(lLeg, list[1]));
+                operationList_rArm.Add(createPartODEList(rArm, list[2]));
+                operationList_lArm.Add(createPartODEList(lArm, list[3]));
+
+                list = Exo_OperationDataList.walk_4;
+                operationList_rLeg.Add(createPartODEList(rLeg, list[0]));
+                operationList_lLeg.Add(createPartODEList(lLeg, list[1]));
+                operationList_rArm.Add(createPartODEList(rArm, list[2]));
+                operationList_lArm.Add(createPartODEList(lArm, list[3]));
+
+            }
+
+            PartOperationDataEntityList createPartODEList(Part part,List<MotorOperationDataEntity> dataEntities)
+            {
+                var entityList = new PartOperationDataEntityList(part);
+                var dictionary = new Dictionary<MoterModel, MotorOperationDataEntity>();
+
+                for (int i = 0; i < part.moters.Count; i++)
                 {
-                    buffdic.Add(rLeg.moters[i],list[0][i]);
+                    dictionary.Add(part.moters[i], dataEntities[i]);
                 }
 
-                buff.entiityDictionaly = buffdic;
-                operationList_rLeg.Add(buff);
-
-                buff = new PartOperationDataEntityList(lLeg);
-                buffdic = new Dictionary<MoterModel, MotorOperationDataEntity>();
-                for (int i = 0; i < lLeg.moters.Count; i++)
-                {
-                    buffdic.Add(lLeg.moters[i], list[0][i]);
-                }
-
-                buff.entiityDictionaly = buffdic;
-                operationList_lLeg.Add(buff);
-
-                buff = new PartOperationDataEntityList(rArm);
-                buffdic = new Dictionary<MoterModel, MotorOperationDataEntity>();
-                for (int i = 0; i < rArm.moters.Count; i++)
-                {
-                    buffdic.Add(rArm.moters[i], list[0][i]);
-                }
-
-                buff.entiityDictionaly = buffdic;
-                operationList_rArm.Add(buff);
-
-                buff = new PartOperationDataEntityList(lArm);
-                buffdic = new Dictionary<MoterModel, MotorOperationDataEntity>();
-                for (int i = 0; i < lArm.moters.Count; i++)
-                {
-                    buffdic.Add(lArm.moters[i], list[0][i]);
-                }
-
-                buff.entiityDictionaly = buffdic;
-                operationList_lArm.Add(buff);            
+                entityList.entiityDictionaly = dictionary;
 
 
+                return entityList;
             }
 
             public override void armTarget(IMyCockpit Rota)
             {
-                throw new NotImplementedException();
+                //throw new NotImplementedException();
             }
+
+
+
+    
 
             public override void Drive(IMyCockpit cockpit)
             {
-                foreach (var item in operationList_lArm)
+                var move = cockpit.MoveIndicator.Z;
+                bool finish = false;
+
+
+
+                foreach (var moter in operationList_rLeg[ActionNo].entiityDictionaly)
                 {
-                    foreach (var moter in item.entiityDictionaly)
+                    var flg = moter.Key.Update();
+                    if (flg && !finish) finish = true;
+                }
+                foreach (var moter in operationList_lLeg[ActionNo].entiityDictionaly)
+                {
+                    var flg = moter.Key.Update();
+                    if (flg && !finish) finish = true;
+                }
+                foreach (var moter in operationList_rArm[ActionNo].entiityDictionaly)
+                {
+                    var flg = moter.Key.Update();
+                    if (flg && !finish) finish = true;
+                }
+                foreach (var moter in operationList_lArm[ActionNo].entiityDictionaly)
+                {
+                    var flg = moter.Key.Update();
+                    if (flg && !finish) finish = true;
+                }
+
+                if (finish || ActionNo == 0)
+                {
+                    if (move < 0)
+                    {
+                        if (ActionNo < 4)
+                        {
+                            ActionNo += 1;
+                        }
+                        else
+                        {
+                            ActionNo = 1;
+                        }
+                    }
+                    else if (move > 0)
+                    {
+                        if (ActionNo > 0)
+                        {
+                            ActionNo -= 1;
+                        }
+                        else
+                        {
+                            ActionNo = 4;
+                        }
+                    }
+                    else
+                    {
+                        ActionNo = 0;
+                    }
+
+                    foreach (var moter in operationList_rLeg[ActionNo].entiityDictionaly)
                     {
                         moter.Key.dataEntity = moter.Value;
-                        moter.Key.Update();
+                    }
+                    foreach (var moter in operationList_lLeg[ActionNo].entiityDictionaly)
+                    {
+                        moter.Key.dataEntity = moter.Value;
+                    }
+                    foreach (var moter in operationList_rArm[ActionNo].entiityDictionaly)
+                    {
+                        moter.Key.dataEntity = moter.Value;
+                    }
+                    foreach (var moter in operationList_lArm[ActionNo].entiityDictionaly)
+                    {
+                        moter.Key.dataEntity = moter.Value;
                     }
                 }
 
-                foreach (var item in operationList_lLeg)
-                {
-                    foreach (var moter in item.entiityDictionaly)
-                    {
-                        moter.Key.dataEntity = moter.Value;
-                        moter.Key.Update();
-                    }
-                }
-                foreach (var item in operationList_rArm)
-                {
-                    foreach (var moter in item.entiityDictionaly)
-                    {
-                        moter.Key.dataEntity = moter.Value;
-                        moter.Key.Update();
-                    }
-                }
-                foreach (var item in operationList_rLeg)
-                {
-                    foreach (var moter in item.entiityDictionaly)
-                    {
-                        moter.Key.dataEntity = moter.Value;
-                        moter.Key.Update();
-                    }
-                }
 
+                //if (!finish) finish = true;
             }
 
         }

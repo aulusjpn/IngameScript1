@@ -24,42 +24,14 @@ namespace IngameScript
 
         IMyCockpit myCockpit;
         OperationServiceBase Operation;
+
+        bool ini = false;
+
         public Program()
         {
-            myCockpit = (IMyCockpit)GridTerminalSystem.GetBlockWithName("Azimuth Open Cockpit No Oxygen");
+            myCockpit = (IMyCockpit)GridTerminalSystem.GetBlockWithName("Azimuth Open Cockpit");
             Runtime.UpdateFrequency = UpdateFrequency.Update1;
             Me.GetSurface(0).ContentType = ContentType.SCRIPT;
-
-
-            var rLeg = new Exo_LegModel(
-                (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"),
-            (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"),
-            (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"));
-
-
-            var lLeg = new Exo_LegModel(
-                (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"),
-            (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"),
-            (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"));
-
-
-            var rArm = new Exo_ArmModel(
-                (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"),
-            (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"),
-            (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"));
-
-
-            var lArm = new Exo_ArmModel(
-                (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"),
-            (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"),
-            (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"));
-
-            Operation = new Exo_MovingOperationSrv(rLeg, lLeg, rArm, lArm);
-
-            // arm = new ArmModel((IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor 3"), true,
-            //     (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Small Conveyor Hinge 1"), true,
-            //     (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Two-ended Motor 1"), true);
-            // Operation = new S_ACS(arm, arm);
 
 
         }
@@ -74,12 +46,60 @@ namespace IngameScript
             // needed.
         }
 
+        public void init()
+        {
+ 
+            var rLeg = new Exo_LegModel(
+                (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor RLeg1"),
+                (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor RLeg2"),
+            (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor RLeg3"),
+            (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor RLeg4"));
+
+
+            var lLeg = new Exo_LegModel(
+                (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor LLeg1"),
+                (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor LLeg2"),
+            (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor LLeg3"),
+            (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor LLeg4"));
+
+
+            var rArm = new Exo_ArmModel(
+                (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor RArm1"),
+            (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor RArm2"),
+            (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor RArm3"));
+
+
+            var lArm = new Exo_ArmModel(
+                (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor LArm1"),
+            (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor LArm2"),
+            (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor LArm3"));
+
+            Operation = new Exo_MovingOperationSrv(rLeg, lLeg, rArm, lArm);
+        }
+
         public void Main(string argument, UpdateType updateSource)
         {
-            var surface = Me.GetSurface(0);
 
-            // Operation.armTarget(myCockpit);
-            Operation.Drive(myCockpit);
+            try
+            {
+                if (!ini)
+                {
+                    init();
+                    ini = true;
+                }
+
+                var surface = Me.GetSurface(0);
+
+                // Operation.armTarget(myCockpit);
+                Operation.Drive(myCockpit);
+
+            }
+            catch (Exception e)
+            {
+
+                myCockpit.CustomData = e.StackTrace.ToString();
+            }
+
 
             // using (MySpriteDrawFrame frame = surface.DrawFrame())
             // {

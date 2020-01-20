@@ -36,11 +36,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExoMovingOperationSrv.cs" />
-    <Compile Include="Program.MotorOperationDataEntity.cs" />
+    <Compile Include="Exo_ArmModel.cs" />
+    <Compile Include="Exo_LegModel.cs" />
+    <Compile Include="Exo_MovingOperationSrv.cs" />
+    <Compile Include="Exo_OperationDataList.cs" />
+    <Compile Include="interface.cs" />
+    <Compile Include="MotorOperationDataEntity.cs" />
+    <Compile Include="MotorOperationFormatter.cs" />
+    <Compile Include="PartOperationDataEntityList.cs" />
     <Compile Include="S_ACS.cs" />
-    <Compile Include="ArmModel.cs" />
-    <Compile Include="LegModel.cs" />
     <Compile Include="MDK\Bootstrapper.cs" />
     <Compile Include="MoterModel.cs" />
     <Compile Include="OperationServiceBase.cs" />

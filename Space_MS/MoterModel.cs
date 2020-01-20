@@ -37,17 +37,17 @@ namespace IngameScript
 
             public bool finishFlg { get; set; }
 
-            public MoterModel(IMyMotorStator moter,MotorOperationDataEntity dataEntity)
+            public MoterModel(IMyMotorStator moter,MotorOperationDataEntity entity)
             {
                 MyMotor = moter;
-                this.dataEntity = dataEntity;
+                this.dataEntity = entity;
 
                 nowTime = DateTime.UtcNow;
                 befTime = DateTime.UtcNow;
             }
 
 
-            public void Update(MotorOperationDataEntity dataEntity = null)
+            public bool Update(MotorOperationDataEntity dataEntity = null)
             {
 
                 
@@ -61,7 +61,7 @@ namespace IngameScript
                 }               
   
 
-                //finishFlg = fastMove(this);
+                return finishFlg = fastMove();
 
             }
 
@@ -126,6 +126,7 @@ namespace IngameScript
 
                 if ((MathHelperD.ToDegrees(MyMotor.Angle) - dataEntity.GetTargetAngle()) < 0.5)
                 {
+                    MyMotor.TargetVelocityRad = 0;
                     return true;
                 }
                 else

@@ -22,7 +22,7 @@ namespace IngameScript
         /// <summary>
         /// 脚部クラス
         /// </summary>
-        public class Exo_LegModel :LegModel
+        public class Exo_LegModel : LegModel
         {
             private DateTime nowTime;
             private DateTime befTime;
@@ -40,16 +40,20 @@ namespace IngameScript
             /// コンストラクタ
             /// </summary>
             /// <param name="m1">第１関節</param>
-            /// <param name="r1">第１関節反転フラグ</param>
+
             /// <param name="m2">第２関節</param>
-            /// <param name="r2">第２関節反転フラグ</param>
+
             /// <param name="m3">第３関節</param>
-            /// <param name="r3">第３関節反転フラグ</param>
-            public Exo_LegModel(IMyMotorStator m1,IMyMotorStator m2, IMyMotorStator m3)
+
+            /// <param name="m4">第4関節</param>
+           
+            public Exo_LegModel(IMyMotorStator m1,IMyMotorStator m2, IMyMotorStator m3,IMyMotorStator m4)
             {
+                moters = new List<MoterModel>();
                 moters.Add(new MoterModel(m1, new MotorOperationDataEntity(0, 0, true)));
                 moters.Add(new MoterModel(m2, new MotorOperationDataEntity(0, 0, true)));
                 moters.Add(new MoterModel(m3, new MotorOperationDataEntity(0, 0, true)));
+                moters.Add(new MoterModel(m4, new MotorOperationDataEntity(0, 0, true)));
             }
 
 

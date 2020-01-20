@@ -38,7 +38,7 @@ namespace IngameScript
         private IMyMotorStator roterR1;
         private IMyMotorStator roterR2;
         private IMyMotorStator roterR3;
-        private IMyTextPanel text;
+        //private IMyTextPanel text;
         private DateTime nowTime;
         private DateTime befTime;
         private List<double> angleList = new List<double>() { 0, 0, 0, 0 };
@@ -56,11 +56,8 @@ namespace IngameScript
             // here, which will allow your script to run itself without a 
             // timer block.
 
-            cockpit = GridTerminalSystem.GetBlockWithName("Cockpit") as IMyCockpit;
-            roterR1 = GridTerminalSystem.GetBlockWithName("Rotor1") as IMyMotorStator;
-            roterR2 = GridTerminalSystem.GetBlockWithName("Rotor2") as IMyMotorStator;
-            roterR3 = GridTerminalSystem.GetBlockWithName("Rotor3") as IMyMotorStator;
-            text = GridTerminalSystem.GetBlockWithName("Wide LCD panel") as IMyTextPanel;
+
+            //text = GridTerminalSystem.GetBlockWithName("Wide LCD panel") as IMyTextPanel;
             Runtime.UpdateFrequency = UpdateFrequency.Update1;
 
         }
@@ -77,20 +74,30 @@ namespace IngameScript
 
         public void Main(string argument, UpdateType updateSource)
         {
-           string  str = "MoveIndicator:" + cockpit.Name + cockpit.MoveIndicator.ToString() + "\r\n";
-            str = str + "RotationIndicator:" + cockpit.RotationIndicator.ToString() + "\r\n";
-            str = str + "RollIndicator:" + cockpit.RollIndicator.ToString() + "\r\n" + "\r\n" + "\r\n";
-            str = str + "cockpit:" + cockpit.WorldMatrix.Down + "  Gear:";
+            try
+            {
+                cockpit = GridTerminalSystem.GetBlockWithName("Azimuth Open Cockpit") as IMyCockpit;
+                roterR1 = GridTerminalSystem.GetBlockWithName("Rotor1") as IMyMotorStator;
+                string str = "MoveIndicator:" + cockpit.Name + cockpit.MoveIndicator.ToString() + "\r\n";
+                str = str + "RotationIndicator:" + cockpit.RotationIndicator.ToString() + "\r\n";
+                str = str + "RollIndicator:" + cockpit.RollIndicator.ToString() + "\r\n" + "\r\n" + "\r\n";
+                str = str + "cockpit:" + cockpit.WorldMatrix.Down + "  Gear:";
 
-           roterR1.TargetVelocityRPM = cockpit.RotationIndicator.Y;
+                roterR1.TargetVelocityRPM = 5f;
 
-            roterR2.TargetVelocityRPM = cockpit.MoveIndicator.Z * 5;
+                //roterR2.TargetVelocityRPM = cockpit.MoveIndicator.Z * 5;
 
-            roterR3.TargetVelocityRPM = cockpit.RotationIndicator.X;
+                //roterR3.TargetVelocityRPM = cockpit.RotationIndicator.X;
 
 
+            }
+            catch (Exception e)
+            {
+                cockpit.CustomData = e.InnerException.ToString();
+            }
 
-            text.WritePublicText(str);
+
+           // text.WritePublicText(str);
 
         }
     }
