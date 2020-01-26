@@ -91,7 +91,7 @@ namespace IngameScript
                 var surface = Me.GetSurface(0);
 
                 // Operation.armTarget(myCockpit);
-                Operation.Drive(myCockpit);
+                Operation.DriveLeg(myCockpit);
 
             }
             catch (Exception e)
@@ -99,20 +99,6 @@ namespace IngameScript
 
                 myCockpit.CustomData = e.StackTrace.ToString();
             }
-
-
-            // using (MySpriteDrawFrame frame = surface.DrawFrame())
-            // {
-            //     MySprite sprite;
-
-            //     string str = myCockpit.MoveIndicator.ToString().AddNewLine()+ myCockpit.RollIndicator.ToString().AddNewLine()+ myCockpit.RotationIndicator.ToString().AddNewLine() + myCockpit.ShowHorizonIndicator.ToString().AddNewLine();
-            //     str += arm.myMotor1.TargetAngleDegree.ToString().AddNewLine();
-            //     sprite = MySprite.CreateText(str, "Debug", Color.Red,0.8f,TextAlignment.LEFT);
-
-            //     sprite.Position = new Vector2(0, 0);
-            //     frame.Add(sprite);
-            // }
-
 
 
         }

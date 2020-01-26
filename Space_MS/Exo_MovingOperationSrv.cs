@@ -30,9 +30,10 @@ namespace IngameScript
 
             bool nextActionFlg = false;
             int ActionNo = 0;
-            
+   
             public Exo_MovingOperationSrv(Exo_LegModel rLeg, Exo_LegModel lLeg, Exo_ArmModel rArm, Exo_ArmModel lArm) : base(rLeg, lLeg, rArm, lArm)
             {
+                
                 var list = Exo_OperationDataList.stble;
                 operationList_rLeg.Add(createPartODEList(rLeg, list[0]));
                 operationList_lLeg.Add(createPartODEList(lLeg, list[1]));
@@ -82,47 +83,73 @@ namespace IngameScript
                 return entityList;
             }
 
+
+
+
             public override void armTarget(IMyCockpit Rota)
             {
-                //throw new NotImplementedException();
-            }
-
-
-
-    
-
-            public override void Drive(IMyCockpit cockpit)
-            {
-                var move = cockpit.MoveIndicator.Z;
-                bool finish = false;
-
-
-
-                foreach (var moter in operationList_rLeg[ActionNo].entiityDictionaly)
-                {
-                    var flg = moter.Key.Update();
-                    if (flg && !finish) finish = true;
-                }
-                foreach (var moter in operationList_lLeg[ActionNo].entiityDictionaly)
-                {
-                    var flg = moter.Key.Update();
-                    if (flg && !finish) finish = true;
-                }
                 foreach (var moter in operationList_rArm[ActionNo].entiityDictionaly)
                 {
                     var flg = moter.Key.Update();
-                    if (flg && !finish) finish = true;
+                    //if (flg && !finish) finish = true;
                 }
                 foreach (var moter in operationList_lArm[ActionNo].entiityDictionaly)
                 {
                     var flg = moter.Key.Update();
-                    if (flg && !finish) finish = true;
+                    //if (flg && !finish) finish = true;
+                }
+                foreach (var moter in operationList_rArm[ActionNo].entiityDictionaly)
+                {
+                    moter.Key.dataEntity = moter.Value;
+                }
+                foreach (var moter in operationList_lArm[ActionNo].entiityDictionaly)
+                {
+                    moter.Key.dataEntity = moter.Value;
                 }
 
-                if (finish || ActionNo == 0)
+            }
+
+            private void driveleg()
+            {
+
+            }
+
+
+            private void updatePartsData()
+            {
+                
+            }
+
+
+
+            public override void DriveLeg(IMyCockpit cockpit)
+            {
+                var move = cockpit.MoveIndicator.Z;
+
+                bool finish = false;
+
+                foreach (var moter in operationList_rLeg[ActionNo].entiityDictionaly)
                 {
-                    if (move < 0)
+                    var flg = moter.Key.Update();
+                    if (flg) finish = true;
+                }
+                foreach (var moter in operationList_lLeg[ActionNo].entiityDictionaly)
+                {
+                    var flg = moter.Key.Update();
+                    if (flg) finish = true;
+                }
+
+
+
+                if (finish)
+                {
+                    if (move == 0)
                     {
+                        ActionNo = 0;
+                    }
+                    else if (move > 0)
+                    {
+
                         if (ActionNo < 4)
                         {
                             ActionNo += 1;
@@ -132,39 +159,31 @@ namespace IngameScript
                             ActionNo = 1;
                         }
                     }
-                    else if (move > 0)
-                    {
-                        if (ActionNo > 0)
-                        {
-                            ActionNo -= 1;
-                        }
-                        else
-                        {
-                            ActionNo = 4;
-                        }
-                    }
                     else
                     {
-                        ActionNo = 0;
+                        //if (ActionNo > 0)
+                        //{
+                        //    ActionNo -= 1;
+                        //}
+                        //else
+                        //{
+                        //    ActionNo = 4;
+                        //}
                     }
 
-                    foreach (var moter in operationList_rLeg[ActionNo].entiityDictionaly)
-                    {
-                        moter.Key.dataEntity = moter.Value;
-                    }
-                    foreach (var moter in operationList_lLeg[ActionNo].entiityDictionaly)
-                    {
-                        moter.Key.dataEntity = moter.Value;
-                    }
-                    foreach (var moter in operationList_rArm[ActionNo].entiityDictionaly)
-                    {
-                        moter.Key.dataEntity = moter.Value;
-                    }
-                    foreach (var moter in operationList_lArm[ActionNo].entiityDictionaly)
-                    {
-                        moter.Key.dataEntity = moter.Value;
-                    }
+                }     
+
+
+                foreach (var moter in operationList_rLeg[ActionNo].entiityDictionaly)
+                {
+                    moter.Key.dataEntity = moter.Value;
                 }
+                foreach (var moter in operationList_lLeg[ActionNo].entiityDictionaly)
+                {
+                    moter.Key.dataEntity = moter.Value;
+                }
+
+
 
 
                 //if (!finish) finish = true;

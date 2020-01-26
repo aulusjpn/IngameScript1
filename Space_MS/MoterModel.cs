@@ -61,7 +61,7 @@ namespace IngameScript
                 }               
   
 
-                return finishFlg = fastMove();
+                return fastMove();
 
             }
 
@@ -90,7 +90,7 @@ namespace IngameScript
                 befTime = DateTime.UtcNow;
                 BefAngleDegree = MathHelperD.ToDegrees(MyMotor.Angle);
 
-                if (Math.Abs(MathHelperD.ToDegrees(MyMotor.Angle) - dataEntity.GetTargetAngle()) < 0.5)
+                if (Math.Abs(MathHelperD.ToDegrees(MyMotor.Angle) - dataEntity.GetTargetAngle()) < 1)
                 {
                     MyMotor.TargetVelocityRad = 0;
                     return true;

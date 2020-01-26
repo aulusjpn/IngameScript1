@@ -37,13 +37,13 @@ namespace IngameScript
                new List<MotorOperationDataEntity>() 
                     {new MotorOperationDataEntity(40,10,true),
                     new MotorOperationDataEntity(0,10,true),
-                    new MotorOperationDataEntity(0,10,true),
-                    new MotorOperationDataEntity(0,10,true)},
+                    new MotorOperationDataEntity(20,10,true),
+                    new MotorOperationDataEntity(20,10,true)},
                new List<MotorOperationDataEntity>()
                     {new MotorOperationDataEntity(40,10,true),
                     new MotorOperationDataEntity(0,10,true),
-                    new MotorOperationDataEntity(0,10,true),
-                    new MotorOperationDataEntity(0,10,true)},
+                    new MotorOperationDataEntity(20,10,true),
+                    new MotorOperationDataEntity(20,10,true)},
                new List<MotorOperationDataEntity>()
                     {new MotorOperationDataEntity(0,10,true),
                     new MotorOperationDataEntity(-60,10,false),
@@ -57,15 +57,15 @@ namespace IngameScript
             public static List<List<MotorOperationDataEntity>> walk_2 = new List<List<MotorOperationDataEntity>>()
             {
                new List<MotorOperationDataEntity>()
-                    {new MotorOperationDataEntity(0,10,true),
+                    {new MotorOperationDataEntity(40,10,true),
                     new MotorOperationDataEntity(0,10,true),
-                    new MotorOperationDataEntity(0,10,true),
-                    new MotorOperationDataEntity(0,10,true)},
+                    new MotorOperationDataEntity(40,10,true),
+                    new MotorOperationDataEntity(40,10,true)},
                new List<MotorOperationDataEntity>()
-                    {new MotorOperationDataEntity(0,10,true),
+                    {new MotorOperationDataEntity(40,10,true),
                     new MotorOperationDataEntity(0,10,true),
-                    new MotorOperationDataEntity(0,10,true),
-                    new MotorOperationDataEntity(0,10,true)},
+                    new MotorOperationDataEntity(40,10,true),
+                    new MotorOperationDataEntity(40,10,true)},
                new List<MotorOperationDataEntity>()
                     {new MotorOperationDataEntity(0,10,true),
                     new MotorOperationDataEntity(-60,10,false),
@@ -79,14 +79,14 @@ namespace IngameScript
             {
                new List<MotorOperationDataEntity>()
                     {new MotorOperationDataEntity(-40,10,true),
-                    new MotorOperationDataEntity(0,10,true),
-                    new MotorOperationDataEntity(0,10,true),
-                    new MotorOperationDataEntity(0,10,true)},
+                    new MotorOperationDataEntity(-0,10,true),
+                    new MotorOperationDataEntity(-20,10,true),
+                    new MotorOperationDataEntity(-20,10,true)},
                new List<MotorOperationDataEntity>()
                     {new MotorOperationDataEntity(-40,10,true),
-                    new MotorOperationDataEntity(0,10,true),
-                    new MotorOperationDataEntity(0,10,true),
-                    new MotorOperationDataEntity(0,10,true)},
+                    new MotorOperationDataEntity(-0,10,true),
+                    new MotorOperationDataEntity(-20,10,true),
+                    new MotorOperationDataEntity(-20,10,true)},
                new List<MotorOperationDataEntity>()
                     {new MotorOperationDataEntity(0,10,true),
                     new MotorOperationDataEntity(-60,10,false),
@@ -99,15 +99,15 @@ namespace IngameScript
             public static List<List<MotorOperationDataEntity>> walk_4 = new List<List<MotorOperationDataEntity>>()
             {
                new List<MotorOperationDataEntity>()
-                    {new MotorOperationDataEntity(0,10,true),
-                    new MotorOperationDataEntity(0,10,true),
-                    new MotorOperationDataEntity(0,10,true),
-                    new MotorOperationDataEntity(0,10,true)},
+                    {new MotorOperationDataEntity(-40,10,true),
+                    new MotorOperationDataEntity(-0,10,true),
+                    new MotorOperationDataEntity(-40,10,true),
+                    new MotorOperationDataEntity(-40,10,true)},
                new List<MotorOperationDataEntity>()
-                    {new MotorOperationDataEntity(0,10,true),
-                    new MotorOperationDataEntity(0,10,true),
-                    new MotorOperationDataEntity(0,10,true),
-                    new MotorOperationDataEntity(0,10,true)},
+                    {new MotorOperationDataEntity(-40,10,true),
+                    new MotorOperationDataEntity(-0,10,true),
+                    new MotorOperationDataEntity(-40,10,true),
+                    new MotorOperationDataEntity(-40,10,true)},
                new List<MotorOperationDataEntity>()
                     {new MotorOperationDataEntity(0,10,true),
                     new MotorOperationDataEntity(-60,10,false),

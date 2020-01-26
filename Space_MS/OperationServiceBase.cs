@@ -76,7 +76,7 @@ namespace IngameScript
 
             public abstract void armTarget(IMyCockpit Rota);
 
-            public abstract void Drive(IMyCockpit cockpit);
+            public abstract void DriveLeg(IMyCockpit cockpit);
 
         }
     }
