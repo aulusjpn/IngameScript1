@@ -24,7 +24,7 @@ namespace IngameScript
         public class PartOperationDataEntityList
         {
 
-           public Dictionary<MoterModel,MotorOperationDataEntity> entiityDictionaly { set; get; }
+           private Dictionary<MoterModel,MotorOperationDataEntity> entiityDictionaly { set; get; }
 
            public PartOperationDataEntityList(Part part)
            {
@@ -36,6 +36,8 @@ namespace IngameScript
                 }
                 entiityDictionaly = dictionary;
             }
+
+
 
         }
     }

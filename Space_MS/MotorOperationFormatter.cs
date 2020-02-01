@@ -34,7 +34,7 @@ namespace IngameScript
             }
 
 
-            public static void setDataEntityToMotor(MotorOperationDataEntity dataEntity,ref IMyMotorStator motorStator)
+            public static void setDataEntityToMotorCustomData(MotorOperationDataEntity dataEntity,ref IMyMotorStator motorStator)
             {
                 string text = "";
 
@@ -48,7 +48,7 @@ namespace IngameScript
             }
 
 
-            public static MotorOperationDataEntity getDataEntityFromMoter(IMyMotorStator motor,MotorOperationDataEntity dataEntity)
+            public static MotorOperationDataEntity getDataEntityFromMoterCustomData(IMyMotorStator motor,MotorOperationDataEntity dataEntity)
             {
                 string text = motor.CustomData;
 
