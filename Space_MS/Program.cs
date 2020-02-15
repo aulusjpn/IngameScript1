@@ -25,6 +25,13 @@ namespace IngameScript
         IMyCockpit myCockpit;
         OperationServiceBase Operation;
 
+        enum ArguEnum
+        {
+            halt = 0,
+            Walk = 1,
+            Run = 2
+        }
+
         bool ini = false;
 
         public Program()
@@ -48,7 +55,7 @@ namespace IngameScript
 
         public void init()
         {
- 
+
             var rLeg = new Exo_LegModel(
                 (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor RLeg1"),
                 (IMyMotorStator)GridTerminalSystem.GetBlockWithName("Rotor RLeg2"),
@@ -88,10 +95,20 @@ namespace IngameScript
                     ini = true;
                 }
 
-                var surface = Me.GetSurface(0);
+                switch (int.Parse(argument))
+                {
+                    case (int)ArguEnum.halt:
+                        break;
+                    case (int)ArguEnum.Walk:
+                        break;
+                    default:
+
+                        break;
+                }
 
                 // Operation.armTarget(myCockpit);
                 Operation.DriveLeg(myCockpit);
+                
 
             }
             catch (Exception e)

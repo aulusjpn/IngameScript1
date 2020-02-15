@@ -37,7 +37,7 @@ namespace IngameScript
 
             public bool finishFlg { get; set; }
 
-            public MoterModel(IMyMotorStator moter,MotorOperationDataEntity entity)
+            public MoterModel(IMyMotorStator moter, MotorOperationDataEntity entity)
             {
                 MyMotor = moter;
                 this.dataEntity = entity;
@@ -50,16 +50,17 @@ namespace IngameScript
             public bool Update(MotorOperationDataEntity dataEntity = null)
             {
 
-                
+
                 nowTime = DateTime.UtcNow;
-                if (dataEntity != null) {
+                if (dataEntity != null)
+                {
                     this.dataEntity = dataEntity;
                 }
                 else
                 {
-                    this.dataEntity = MotorOperationFormatter.getDataEntityFromMoter(MyMotor, this.dataEntity);
-                }               
-  
+                    this.dataEntity = MotorOperationFormatter.getDataEntityFromMoterCustomData(MyMotor, this.dataEntity);
+                }
+
 
                 return fastMove();
 

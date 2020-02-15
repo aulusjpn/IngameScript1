@@ -80,9 +80,14 @@ namespace IngameScript
                 return returnvalue;
             }
 
+            public void getData()
+            { 
+                
+            }
+
             public void setData(PartOperationDataEntityList dataEntityList)
             {
-                dataEntityList.
+                //dataEntityList.
                 foreach (var moter in moters)
                 {
                     MotorOperationFormatter.setDataEntityToMotorCustomData(dataEntity, ref moter);

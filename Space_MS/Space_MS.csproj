@@ -36,15 +36,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Exo_ArmModel.cs" />
-    <Compile Include="Exo_LegModel.cs" />
-    <Compile Include="Exo_MovingOperationSrv.cs" />
-    <Compile Include="Exo_OperationDataList.cs" />
-    <Compile Include="interface.cs" />
-    <Compile Include="MotorOperationDataEntity.cs" />
-    <Compile Include="MotorOperationFormatter.cs" />
-    <Compile Include="PartOperationDataEntityList.cs" />
+    <Compile Include="ExoMovingOperationSrv.cs" />
+    <Compile Include="Program.MotorOperationDataEntity.cs" />
     <Compile Include="S_ACS.cs" />
+    <Compile Include="ArmModel.cs" />
+    <Compile Include="LegModel.cs" />
     <Compile Include="MDK\Bootstrapper.cs" />
     <Compile Include="MoterModel.cs" />
     <Compile Include="OperationServiceBase.cs" />
@@ -66,6 +62,16 @@
     <AdditionalFiles Include="MDK\MDK.paths.props">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </AdditionalFiles>
+    <Content Include="MDK\mdk.paths.props" />
+    <Content Include="MDK\mdk.options.props" />
+    <Content Include="MotorOperationDataEntity.cs" />
+    <Content Include="Exo_LegModel.cs" />
+    <Content Include="Exo_ArmModel.cs" />
+    <Content Include="Exo_OperationDataList.cs" />
+    <Content Include="interface.cs" />
+    <Content Include="MotorOperationFormatter.cs" />
+    <Content Include="PartOperationDataEntityList.cs" />
+    <Content Include="Exo_MovingOperationSrv.cs" />
   </ItemGroup>
   <Import Project="MDK/MDK.options.props" />
   <Import Project="MDK/MDK.paths.props" />

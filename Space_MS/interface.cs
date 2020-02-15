@@ -27,7 +27,8 @@ namespace IngameScript
         public abstract class LegModel : Part
         { }
 
-        public abstract class Part {
+        public abstract class Part
+        {
             public List<MoterModel> moters { set; get; }
 
         }
