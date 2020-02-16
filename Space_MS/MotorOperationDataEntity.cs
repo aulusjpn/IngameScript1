@@ -82,7 +82,7 @@ namespace IngameScript
                 reverce = value;
             }
 
-            public MotorOperationDataEntity(double targetAngle, float targetVelocity, bool reverce)
+            public MotorOperationDataEntity(double targetAngle = 0, float targetVelocity = 0, bool reverce = false)
             {
                 this.SetTargetAngle(targetAngle);
                 this.SetVelocity(targetVelocity);

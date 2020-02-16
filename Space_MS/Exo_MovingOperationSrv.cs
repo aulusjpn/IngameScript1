@@ -58,21 +58,21 @@ namespace IngameScript
 
             }
 
-            PartOperationDataEntityList createPartODEList(Part part, List<MotorOperationDataEntity> dataEntities)
-            {
-                var entityList = new PartOperationDataEntityList(part);
-                var dictionary = new Dictionary<MoterModel, MotorOperationDataEntity>();
+            // PartOperationDataEntityList createPartODEList(Part part, List<MotorOperationDataEntity> dataEntities)
+            // {
+            //     var entityList = new PartOperationDataEntityList(part);
+            //     var dictionary = new Dictionary<MoterModel, MotorOperationDataEntity>();
 
-                for (int i = 0; i < part.moters.Count; i++)
-                {
-                    dictionary.Add(part.moters[i], dataEntities[i]);
-                }
+            //     for (int i = 0; i < part.moters.Count; i++)
+            //     {
+            //         dictionary.Add(part.moters[i], dataEntities[i]);
+            //     }
 
-                entityList.entiityDictionaly = dictionary;
+            //     entityList.entiityDictionaly = dictionary;
 
 
-                return entityList;
-            }
+            //     return entityList;
+            // }
 
         }
 

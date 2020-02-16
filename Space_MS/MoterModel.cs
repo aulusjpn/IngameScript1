@@ -33,14 +33,14 @@ namespace IngameScript
             /// モーターの操作情報保持クラス。
             /// あくまで命令保持であり、データ
             /// </summary>
-            public MotorOperationDataEntity dataEntity { get; set; }
+            public MotorOperationDataEntity DataEntity { get; set; }
 
             public bool finishFlg { get; set; }
 
             public MoterModel(IMyMotorStator moter, MotorOperationDataEntity entity)
             {
                 MyMotor = moter;
-                this.dataEntity = entity;
+                this.DataEntity = entity;
 
                 nowTime = DateTime.UtcNow;
                 befTime = DateTime.UtcNow;
@@ -54,11 +54,11 @@ namespace IngameScript
                 nowTime = DateTime.UtcNow;
                 if (dataEntity != null)
                 {
-                    this.dataEntity = dataEntity;
+                    this.DataEntity = dataEntity;
                 }
                 else
                 {
-                    this.dataEntity = MotorOperationFormatter.getDataEntityFromMoterCustomData(MyMotor, this.dataEntity);
+                    this.DataEntity = MotorOperationFormatter.getDataEntityFromMoterCustomData(MyMotor, this.DataEntity);
                 }
 
 
@@ -73,14 +73,14 @@ namespace IngameScript
 
                 //double ang = (motor.Angle - motor.BefAngle);
 
-                double diffAngle = dataEntity.GetTargetAngle() - MathHelperD.ToDegrees(MyMotor.Angle);
+                double diffAngle = DataEntity.GetTargetAngle() - MathHelperD.ToDegrees(MyMotor.Angle);
 
                 double rad = MathHelperD.ToRadians(diffAngle) / (-0.03);
 
 
-                if (dataEntity.GetVelocity() < Math.Abs(rad * 9.549))
+                if (DataEntity.GetVelocity() < Math.Abs(rad * 9.549))
                 {
-                    MyMotor.TargetVelocityRPM = MathHelperD.ToDegrees(rad) < 0 ? dataEntity.GetVelocity() : -dataEntity.GetVelocity();
+                    MyMotor.TargetVelocityRPM = MathHelperD.ToDegrees(rad) < 0 ? DataEntity.GetVelocity() : -DataEntity.GetVelocity();
                 }
                 else
                 {
@@ -91,7 +91,7 @@ namespace IngameScript
                 befTime = DateTime.UtcNow;
                 BefAngleDegree = MathHelperD.ToDegrees(MyMotor.Angle);
 
-                if (Math.Abs(MathHelperD.ToDegrees(MyMotor.Angle) - dataEntity.GetTargetAngle()) < 1)
+                if (Math.Abs(MathHelperD.ToDegrees(MyMotor.Angle) - DataEntity.GetTargetAngle()) < 1)
                 {
                     MyMotor.TargetVelocityRad = 0;
                     return true;
@@ -109,13 +109,13 @@ namespace IngameScript
 
                 double ang = (MathHelperD.ToDegrees(MyMotor.Angle) - BefAngleDegree);
 
-                double diffAngle = dataEntity.GetTargetAngle() - (MathHelperD.ToDegrees(MyMotor.Angle));
+                double diffAngle = DataEntity.GetTargetAngle() - (MathHelperD.ToDegrees(MyMotor.Angle));
 
                 double rad = MathHelperD.ToRadians(diffAngle) / ts.TotalSeconds;
 
                 if (diffAngle > rad)
                 {
-                    MyMotor.TargetVelocityRPM = dataEntity.GetVelocity();
+                    MyMotor.TargetVelocityRPM = DataEntity.GetVelocity();
                 }
                 else
                 {
@@ -125,7 +125,7 @@ namespace IngameScript
 
                 BefAngleDegree = MathHelperD.ToDegrees(MyMotor.Angle);
 
-                if ((MathHelperD.ToDegrees(MyMotor.Angle) - dataEntity.GetTargetAngle()) < 0.5)
+                if ((MathHelperD.ToDegrees(MyMotor.Angle) - DataEntity.GetTargetAngle()) < 0.5)
                 {
                     MyMotor.TargetVelocityRad = 0;
                     return true;
