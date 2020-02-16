@@ -24,19 +24,31 @@ namespace IngameScript
         public class PartOperationDataEntityList
         {
 
-           private Dictionary<MoterModel,MotorOperationDataEntity> entiityDictionaly { set; get; }
+            private Dictionary<MoterModel, MotorOperationDataEntity> entiityDictionaly { set; get; }
 
-           public PartOperationDataEntityList(Part part)
-           {
+            private Part Part { set; get; }
+
+            public PartOperationDataEntityList(Part part)
+            {
                 var dictionary = new Dictionary<MoterModel, MotorOperationDataEntity>();
                 foreach (var item in part.moters)
                 {
-                    dictionary.Add(item, new MotorOperationDataEntity(0,0,true));
+                    dictionary.Add(item, new MotorOperationDataEntity(0, 0, true));
+
 
                 }
+
+                Part = part;
                 entiityDictionaly = dictionary;
             }
 
+            public MotorOperationDataEntity getDataEntity(MoterModel moter)
+            {
+                MotorOperationDataEntity dataEntity = new MotorOperationDataEntity(0,0,false);
+                entiityDictionaly.TryGetValue(moter,out dataEntity);
+
+                return dataEntity;
+            }
 
 
         }

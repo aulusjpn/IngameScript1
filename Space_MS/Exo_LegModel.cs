@@ -27,6 +27,7 @@ namespace IngameScript
             private DateTime nowTime;
             private DateTime befTime;
 
+
             // public MoterModel myMotorKnee;
 
 
@@ -61,7 +62,7 @@ namespace IngameScript
             /// Movinegmoter
             /// </summary>
             /// <returns>Finisih?</returns>
-            public bool Drive()
+            public bool Drive(int mode)
             {
 
                 bool returnvalue = false;
@@ -80,9 +81,15 @@ namespace IngameScript
                 return returnvalue;
             }
 
+
+            public void walk()
+            {
+
+            }
+
             public void setData(PartOperationDataEntityList dataEntityList)
             {
-                dataEntityList.
+                
                 foreach (var moter in moters)
                 {
                     MotorOperationFormatter.setDataEntityToMotorCustomData(dataEntity, ref moter);
