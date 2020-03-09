@@ -27,8 +27,12 @@ namespace IngameScript
         public abstract class LegModel : Part
         { }
 
-        public abstract class Part {
-            public List<MoterModel> moters { set; get; }
+        public abstract class Part
+        {
+             public Dictionary<string,MoterModel> Moters { set; get; }
+
+            protected Dictionary<MoterModel, MotorOperationDataEntity> entiityDictionaly { set; get; }
+            // public Dictionary<MoterModel,MotorOperationDataEntity> Moters{ get; set; }
 
         }
     }

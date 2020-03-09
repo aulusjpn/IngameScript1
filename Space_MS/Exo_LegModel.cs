@@ -27,16 +27,6 @@ namespace IngameScript
             private DateTime nowTime;
             private DateTime befTime;
 
-
-            // public MoterModel myMotorKnee;
-
-
-            // public MoterModel myMotorThigh;
-
-
-            // public MoterModel myMotorAnkle;
-
-
             /// <summary>
             /// コンストラクタ
             /// </summary>
@@ -50,51 +40,47 @@ namespace IngameScript
            
             public Exo_LegModel(IMyMotorStator m1,IMyMotorStator m2, IMyMotorStator m3,IMyMotorStator m4)
             {
-                moters = new List<MoterModel>();
-                moters.Add(new MoterModel(m1, new MotorOperationDataEntity(0, 0, true)));
-                moters.Add(new MoterModel(m2, new MotorOperationDataEntity(0, 0, true)));
-                moters.Add(new MoterModel(m3, new MotorOperationDataEntity(0, 0, true)));
-                moters.Add(new MoterModel(m4, new MotorOperationDataEntity(0, 0, true)));
+                this.Moters = new Dictionary<string, MoterModel>();
+                this.Moters.Add("1",new MoterModel(m1, new MotorOperationDataEntity(0, 0, true)));
+                this.Moters.Add("2",new MoterModel(m2, new MotorOperationDataEntity(0, 0, true)));
+                this.Moters.Add("3",new MoterModel(m3, new MotorOperationDataEntity(0, 0, true)));
+                this.Moters.Add("4",new MoterModel(m4, new MotorOperationDataEntity(0, 0, true)));
+                entiityDictionaly = new Dictionary<MoterModel, MotorOperationDataEntity>();
+
+                foreach (var moter in this.Moters)
+                {
+                    entiityDictionaly.Add(moter.Value, new MotorOperationDataEntity());
+                }
+        
             }
 
+            public void setData(MoterModel moter ,MotorOperationDataEntity dataEntity)
+            {
+                this.entiityDictionaly[moter] = dataEntity;
+            }
 
             /// <summary>
             /// Movinegmoter
             /// </summary>
             /// <returns>Finisih?</returns>
-            public bool Drive(int mode)
+            public bool Drive()
             {
+
 
                 bool returnvalue = false;
 
                 nowTime = DateTime.UtcNow;
 
 
-                foreach (var item in moters)
+                foreach (var item in Moters)
                 {
-                    item.Update();
+                    item.Value.Update(entiityDictionaly[item.Value]);
                 }
 
 
                 befTime = nowTime;
 
                 return returnvalue;
-            }
-
-
-            public void walk()
-            {
-
-            }
-
-            public void setData(PartOperationDataEntityList dataEntityList)
-            {
-                
-                foreach (var moter in moters)
-                {
-                    MotorOperationFormatter.setDataEntityToMotorCustomData(dataEntity, ref moter);
-                }
-              
             }
             
         }

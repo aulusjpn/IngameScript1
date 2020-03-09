@@ -24,7 +24,7 @@ namespace IngameScript
         public static class MotorOperationFormatter
         {
 
-            public static MotorOperationDataEntity setToDataEntityFromValue(MotorOperationDataEntity dataEntity,float? targetAngle = null, float? velocity = null, bool? reverce = null)
+            public static MotorOperationDataEntity setToDataEntityFromValue(MotorOperationDataEntity dataEntity, float? targetAngle = null, float? velocity = null, bool? reverce = null)
             {
                 if (targetAngle != null) dataEntity.SetTargetAngle((float)targetAngle);
                 if (velocity != null) dataEntity.SetVelocity((float)velocity);
@@ -34,21 +34,22 @@ namespace IngameScript
             }
 
 
-            public static void setDataEntityToMotorCustomData(MotorOperationDataEntity dataEntity,ref IMyMotorStator motorStator)
+            public static void setDataEntityToMotorCustomData(MotorOperationDataEntity dataEntity, ref IMyMotorStator motorStator)
             {
                 string text = "";
 
                 text += "Angle:" + dataEntity.GetTargetAngle().ToString();
                 text.AddNewLine();
+
                 text += "Velocity:" + dataEntity.GetVelocity().ToString();
                 text.AddNewLine();
                 text += "Reverce:" + dataEntity.GetReverce().ToString();
                 motorStator.CustomData = text;
-           
+
             }
 
 
-            public static MotorOperationDataEntity getDataEntityFromMoterCustomData(IMyMotorStator motor,MotorOperationDataEntity dataEntity)
+            public static MotorOperationDataEntity getDataEntityFromMoterCustomData(IMyMotorStator motor, MotorOperationDataEntity dataEntity)
             {
                 string text = motor.CustomData;
 
@@ -56,7 +57,7 @@ namespace IngameScript
 
                 foreach (var item in arr)
                 {
-                   var array = item.Split(':');
+                    var array = item.Split(':');
 
                     switch (array[0])
                     {

@@ -23,104 +23,27 @@ namespace IngameScript
     {
         public class Exo_MovingOperationSrv : OperationServiceBase
         {
-            List<PartOperationDataEntityList> operationList_rLeg = new List<PartOperationDataEntityList>();
-            List<PartOperationDataEntityList> operationList_lLeg = new List<PartOperationDataEntityList>();
-            List<PartOperationDataEntityList> operationList_rArm = new List<PartOperationDataEntityList>();
-            List<PartOperationDataEntityList> operationList_lArm = new List<PartOperationDataEntityList>();
-
             bool nextActionFlg = false;
             int ActionNo = 0;
-   
+
             public Exo_MovingOperationSrv(Exo_LegModel rLeg, Exo_LegModel lLeg, Exo_ArmModel rArm, Exo_ArmModel lArm) : base(rLeg, lLeg, rArm, lArm)
             {
+
+            }
+
+            public override void updateArmPartOparationData(PartOperationDataEntityList dataEntityList, ArmModel armModel)
+            {
                 
-                var list = Exo_OperationDataList.stble;
-                operationList_rLeg.Add(createPartODEList(rLeg, list[0]));
-                operationList_lLeg.Add(createPartODEList(lLeg, list[1]));
-                operationList_rArm.Add(createPartODEList(rArm, list[2]));
-                operationList_lArm.Add(createPartODEList(lArm, list[3]));
-
-
-                list = Exo_OperationDataList.walk_1;
-                operationList_rLeg.Add(createPartODEList(rLeg, list[0]));
-                operationList_lLeg.Add(createPartODEList(lLeg, list[1]));
-                operationList_rArm.Add(createPartODEList(rArm, list[2]));
-                operationList_lArm.Add(createPartODEList(lArm, list[3]));
-
-                list = Exo_OperationDataList.walk_2;
-                operationList_rLeg.Add(createPartODEList(rLeg, list[0]));
-                operationList_lLeg.Add(createPartODEList(lLeg, list[1]));
-                operationList_rArm.Add(createPartODEList(rArm, list[2]));
-                operationList_lArm.Add(createPartODEList(lArm, list[3]));
-
-                list = Exo_OperationDataList.walk_3;
-                operationList_rLeg.Add(createPartODEList(rLeg, list[0]));
-                operationList_lLeg.Add(createPartODEList(lLeg, list[1]));
-                operationList_rArm.Add(createPartODEList(rArm, list[2]));
-                operationList_lArm.Add(createPartODEList(lArm, list[3]));
-
-                list = Exo_OperationDataList.walk_4;
-                operationList_rLeg.Add(createPartODEList(rLeg, list[0]));
-                operationList_lLeg.Add(createPartODEList(lLeg, list[1]));
-                operationList_rArm.Add(createPartODEList(rArm, list[2]));
-                operationList_lArm.Add(createPartODEList(lArm, list[3]));
 
             }
 
-            PartOperationDataEntityList createPartODEList(Part part,List<MotorOperationDataEntity> dataEntities)
-            {
-                var entityList = new PartOperationDataEntityList(part);
-                var dictionary = new Dictionary<MoterModel, MotorOperationDataEntity>();
-
-                for (int i = 0; i < part.moters.Count; i++)
-                {
-                    dictionary.Add(part.moters[i], dataEntities[i]);
-                }
-
-                entityList.entiityDictionaly = dictionary;
-
-
-                return entityList;
-            }
-
-
-
-
-            public override void armTarget(IMyCockpit Rota)
-            {
-                foreach (var moter in operationList_rArm[ActionNo].entiityDictionaly)
-                {
-                    var flg = moter.Key.Update();
-                    //if (flg && !finish) finish = true;
-                }
-                foreach (var moter in operationList_lArm[ActionNo].entiityDictionaly)
-                {
-                    var flg = moter.Key.Update();
-                    //if (flg && !finish) finish = true;
-                }
-                foreach (var moter in operationList_rArm[ActionNo].entiityDictionaly)
-                {
-                    moter.Key.dataEntity = moter.Value;
-                }
-                foreach (var moter in operationList_lArm[ActionNo].entiityDictionaly)
-                {
-                    moter.Key.dataEntity = moter.Value;
-                }
-
-            }
-
-            private void driveleg()
-            {
-
-            }
-
+            public override void updateLegPartOparationData(PartOperationDataEntityList dataEntityList, LegModel legModel)
+            {}
 
             private void updatePartsData()
             {
-                
+
             }
-
-
 
             public override void DriveLeg(IMyCockpit cockpit)
             {
@@ -128,67 +51,31 @@ namespace IngameScript
 
                 bool finish = false;
 
-                foreach (var moter in operationList_rLeg[ActionNo].entiityDictionaly)
-                {
-                    var flg = moter.Key.Update();
-                    if (flg) finish = true;
-                }
-                foreach (var moter in operationList_lLeg[ActionNo].entiityDictionaly)
-                {
-                    var flg = moter.Key.Update();
-                    if (flg) finish = true;
-                }
-
-
-
-                if (finish)
-                {
-                    if (move == 0)
-                    {
-                        ActionNo = 0;
-                    }
-                    else if (move > 0)
-                    {
-
-                        if (ActionNo < 4)
-                        {
-                            ActionNo += 1;
-                        }
-                        else
-                        {
-                            ActionNo = 1;
-                        }
-                    }
-                    else
-                    {
-                        //if (ActionNo > 0)
-                        //{
-                        //    ActionNo -= 1;
-                        //}
-                        //else
-                        //{
-                        //    ActionNo = 4;
-                        //}
-                    }
-
-                }     
-
-
-                foreach (var moter in operationList_rLeg[ActionNo].entiityDictionaly)
-                {
-                    moter.Key.dataEntity = moter.Value;
-                }
-                foreach (var moter in operationList_lLeg[ActionNo].entiityDictionaly)
-                {
-                    moter.Key.dataEntity = moter.Value;
-                }
-
-
-
-
-                //if (!finish) finish = true;
             }
 
+            public override void armTarget(IMyCockpit Rota)
+            {
+
+            }
+
+            // PartOperationDataEntityList createPartODEList(Part part, List<MotorOperationDataEntity> dataEntities)
+            // {
+            //     var entityList = new PartOperationDataEntityList(part);
+            //     var dictionary = new Dictionary<MoterModel, MotorOperationDataEntity>();
+
+            //     for (int i = 0; i < part.moters.Count; i++)
+            //     {
+            //         dictionary.Add(part.moters[i], dataEntities[i]);
+            //     }
+
+            //     entityList.entiityDictionaly = dictionary;
+
+
+            //     return entityList;
+            // }
+
         }
+
+
     }
 }

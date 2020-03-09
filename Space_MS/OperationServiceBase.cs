@@ -44,7 +44,7 @@ namespace IngameScript
             /// </summary>
             /// <param name="RLeg">右足</param>
             /// <param name="LLeg">左脚</param>
-            public OperationServiceBase(LegModel rLeg, LegModel lLeg,ArmModel rArm,ArmModel lArm)
+            public OperationServiceBase(LegModel rLeg, LegModel lLeg, ArmModel rArm, ArmModel lArm)
             {
                 this.RPart = rLeg;
                 this.LPart = lLeg;
@@ -53,6 +53,10 @@ namespace IngameScript
 
             }
 
+            public abstract void updateLegPartOparationData(PartOperationDataEntityList dataEntityList, LegModel legModel);
+
+            public abstract void updateArmPartOparationData(PartOperationDataEntityList dataEntityList, ArmModel armModel);
+
             //public abstract void MovingPart();
 
             public void AimTarget_sensor(IMySensorBlock sensor)
@@ -60,7 +64,7 @@ namespace IngameScript
                 //string[] vs = RArm.myMotor1.MyMotor.CustomData.Split(',');
                 //var str = sensor.CustomData.Split(',');
                 //var vector = new Vector3D(double.Parse(str[0]), double.Parse(str[1]), double.Parse(str[2]));
-                
+
                 //Vector3D worldDirection = vector - sensor.GetPosition();
 
                 //Vector3D direction = Vector3D.TransformNormal(worldDirection, MatrixD.Transpose(sensor.WorldMatrix));
